@@ -6,8 +6,12 @@
 #include <osg/Shape>
 #include <osg/ShapeDrawable>
 
+#include <osgGA/EventQueue>
+
 #include <osgViewer/View>
 #include <osgViewer/ViewerEventHandlers>
+
+#include <stdexcept>
 
 OSGWidget::OSGWidget( QWidget* parent,
                       const QGLWidget* shareWidget,
@@ -50,18 +54,102 @@ void OSGWidget::paintGL()
   viewer_->frame();
 }
 
-void OSGWidget::resizeGL(int width, int height)
+void OSGWidget::resizeGL( int width, int height )
 {
-  graphicsWindow_->getEventQueue()->windowResize( this->x(), this->y(), width, height );
+  this->getEventQueue()->windowResize( this->x(), this->y(), width, height );
   graphicsWindow_->resized( this->x(), this->y(), width, height );
 }
 
-void OSGWidget::keyPressEvent(QKeyEvent* event)
+void OSGWidget::keyPressEvent( QKeyEvent* event )
 {
-  graphicsWindow_->getEventQueue()->keyPress( osgGA::GUIEventAdapter::KeySymbol( *event->text().toAscii().data() ) );
+  QString keyString   = event->text();
+  const char* keyData = keyString.toAscii().data();
+
+  this->getEventQueue()->keyPress( osgGA::GUIEventAdapter::KeySymbol( *keyData ) );
 }
 
-void OSGWidget::keyReleaseEvent(QKeyEvent* event)
+void OSGWidget::keyReleaseEvent( QKeyEvent* event )
 {
-  graphicsWindow_->getEventQueue()->keyRelease( osgGA::GUIEventAdapter::KeySymbol( *event->text().toAscii().data() ) );
+  QString keyString   = event->text();
+  const char* keyData = keyString.toAscii().data();
+
+  this->getEventQueue()->keyRelease( osgGA::GUIEventAdapter::KeySymbol( *keyData ) );
+}
+
+void OSGWidget::mouseMoveEvent( QMouseEvent* event )
+{
+  this->getEventQueue()->mouseMotion( static_cast<float>( event->x() ),
+                                      static_cast<float>( event->y() ) );
+}
+
+void OSGWidget::mousePressEvent( QMouseEvent* event )
+{
+  // 1 = left mouse button
+  // 2 = middle mouse button
+  // 3 = right mouse button
+
+  unsigned int button = 0;
+
+  switch( event->button() )
+  {
+  case Qt::LeftButton:
+    button = 1;
+    break;
+
+  case Qt::MiddleButton:
+    button = 2;
+    break;
+
+  case Qt::RightButton:
+    button = 3;
+    break;
+
+  default:
+    break;
+  }
+
+  this->getEventQueue()->mouseButtonPress( static_cast<float>( event->x() ),
+                                           static_cast<float>( event->y() ),
+                                           button );
+}
+
+void OSGWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+  // 1 = left mouse button
+  // 2 = middle mouse button
+  // 3 = right mouse button
+
+  unsigned int button = 0;
+
+  switch( event->button() )
+  {
+  case Qt::LeftButton:
+    button = 1;
+    break;
+
+  case Qt::MiddleButton:
+    button = 2;
+    break;
+
+  case Qt::RightButton:
+    button = 3;
+    break;
+
+  default:
+    break;
+  }
+
+  this->getEventQueue()->mouseButtonRelease( static_cast<float>( event->x() ),
+                                             static_cast<float>( event->y() ),
+                                             button );
+}
+
+osgGA::EventQueue* OSGWidget::getEventQueue() const
+{
+  osgGA::EventQueue* eventQueue = graphicsWindow_->getEventQueue();
+
+  if( eventQueue )
+    return( eventQueue );
+  else
+    throw( std::runtime_error( "Unable to obtain valid event queue") );
 }

@@ -24,7 +24,14 @@ protected:
   virtual void keyPressEvent( QKeyEvent* event );
   virtual void keyReleaseEvent( QKeyEvent* event );
 
+  virtual void mouseMoveEvent( QMouseEvent* event );
+  virtual void mousePressEvent( QMouseEvent* event );
+  virtual void mouseReleaseEvent( QMouseEvent* event );
+
 private:
+
+  osgGA::EventQueue* getEventQueue() const;
+
   osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> graphicsWindow_;
   osg::ref_ptr<osgViewer::CompositeViewer> viewer_;
 };
