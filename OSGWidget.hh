@@ -28,6 +28,8 @@ protected:
   virtual void mousePressEvent( QMouseEvent* event );
   virtual void mouseReleaseEvent( QMouseEvent* event );
 
+  virtual bool event( QEvent* event );
+
 private:
 
   osgGA::EventQueue* getEventQueue() const;

@@ -144,6 +144,31 @@ void OSGWidget::mouseReleaseEvent(QMouseEvent* event)
                                              button );
 }
 
+bool OSGWidget::event( QEvent* event )
+{
+  bool handled = QGLWidget::event( event );
+
+  // This ensures that the OSG widget is always going to be repainted after the
+  // user performed some interaction. Doing this in the event handler ensures
+  // that we don't forget about some event and prevents duplicate code.
+  switch( event->type() )
+  {
+  case QEvent::KeyPress:
+  case QEvent::KeyRelease:
+  case QEvent::MouseButtonDblClick:
+  case QEvent::MouseButtonPress:
+  case QEvent::MouseButtonRelease:
+  case QEvent::MouseMove:
+    this->repaint();
+    break;
+
+  default:
+    break;
+  }
+
+  return( handled );
+}
+
 osgGA::EventQueue* OSGWidget::getEventQueue() const
 {
   osgGA::EventQueue* eventQueue = graphicsWindow_->getEventQueue();
