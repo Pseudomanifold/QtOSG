@@ -7,6 +7,7 @@
 #include <osg/ShapeDrawable>
 
 #include <osgGA/EventQueue>
+#include <osgGA/TrackballManipulator>
 
 #include <osgViewer/View>
 #include <osgViewer/ViewerEventHandlers>
@@ -33,13 +34,14 @@ OSGWidget::OSGWidget( QWidget* parent,
   osg::Camera* camera = new osg::Camera;
   camera->setViewport( 0, 0, this->width(), this->height() );
   camera->setClearColor( osg::Vec4( 0.f, 0.f, 1.f, 1.f ) );
-  camera->setProjectionMatrixAsOrtho2D( -1.0, 1.0, -1.0, 1.0 );
+  camera->setProjectionMatrixAsFrustum( -1.0, 1.0, -1.0, 1.0, -1.0, 1.0 );
   camera->setGraphicsContext( graphicsWindow_ );
 
   osgViewer::View* view = new osgViewer::View;
   view->setCamera( camera );
   view->setSceneData( geode );
   view->addEventHandler( new osgViewer::StatsHandler );
+  view->setCameraManipulator( new osgGA::TrackballManipulator );
 
   viewer_->addView( view );
   viewer_->setThreadingModel( osgViewer::CompositeViewer::SingleThreaded );
