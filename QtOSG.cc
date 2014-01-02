@@ -1,4 +1,4 @@
-#include "OSGWidget.hh"
+#include "MainWindow.hh"
 
 #include <QApplication>
 
@@ -6,8 +6,8 @@ int main( int argc, char** argv )
 {
   QApplication application( argc, argv );
 
-  OSGWidget* widget = new OSGWidget( 0 );
-  widget->show();
+  MainWindow mainWindow;
+  mainWindow.show();
 
   return( application.exec() );
 }

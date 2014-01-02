@@ -1,3 +1,6 @@
+#ifndef OSGWidget_hh__
+#define OSGWidget_hh__
+
 #include <QtOpenGL>
 
 #include <osg/ref_ptr>
@@ -37,3 +40,5 @@ private:
   osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> graphicsWindow_;
   osg::ref_ptr<osgViewer::CompositeViewer> viewer_;
 };
+
+#endif
