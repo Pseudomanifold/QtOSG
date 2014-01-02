@@ -48,6 +48,12 @@ OSGWidget::OSGWidget( QWidget* parent,
 
   viewer_->addView( view );
   viewer_->setThreadingModel( osgViewer::CompositeViewer::SingleThreaded );
+
+  // This ensures that the widget will receive keyboard events. This focus
+  // policy is not set by default. The default, Qt::NoFocus, will result in
+  // keyboard events that are ignored.
+  this->setFocusPolicy( Qt::StrongFocus );
+  this->setMinimumSize( 100, 100 );
 }
 
 OSGWidget::~OSGWidget()
