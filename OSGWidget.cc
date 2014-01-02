@@ -13,6 +13,9 @@
 #include <osgViewer/ViewerEventHandlers>
 
 #include <stdexcept>
+#include <vector>
+
+#include <QDebug>
 
 OSGWidget::OSGWidget( QWidget* parent,
                       const QGLWidget* shareWidget,
@@ -58,6 +61,21 @@ void OSGWidget::paintGL()
 
 void OSGWidget::resizeGL( int width, int height )
 {
+  qDebug() << __PRETTY_FUNCTION__
+           << ":"
+           << "width =" << width
+           << "height =" << height;
+
+
+  std::vector<osg::Camera*> cameras;
+  viewer_->getCameras( cameras );
+
+  for( std::size_t i = 0; i < cameras.size(); i++ )
+  {
+    cameras.at( i )->setViewport( 0, 0,
+                                  width, height );
+  }
+
   this->getEventQueue()->windowResize( this->x(), this->y(), width, height );
   graphicsWindow_->resized( this->x(), this->y(), width, height );
 }
