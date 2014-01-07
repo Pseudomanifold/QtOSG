@@ -67,6 +67,9 @@ void OSGWidget::paintGL()
 
 void OSGWidget::resizeGL( int width, int height )
 {
+  this->getEventQueue()->windowResize( this->x(), this->y(), width, height );
+  graphicsWindow_->resized( this->x(), this->y(), width, height );
+
   std::vector<osg::Camera*> cameras;
   viewer_->getCameras( cameras );
 
@@ -75,14 +78,6 @@ void OSGWidget::resizeGL( int width, int height )
     cameras.at( i )->setViewport( 0, 0,
                                   width, height );
   }
-
-  this->getEventQueue()->windowResize( this->x(), this->y(), width, height );
-  graphicsWindow_->resized( this->x(), this->y(), width, height );
-
-  // Schedules a new paint event for the widget. This ensures that
-  // multiple events are cached instead of forcing Qt to repaint the
-  // entire widget.
-  this->update();
 }
 
 void OSGWidget::keyPressEvent( QKeyEvent* event )
