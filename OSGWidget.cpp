@@ -184,7 +184,7 @@ bool OSGWidget::event( QEvent* event )
   case QEvent::MouseButtonPress:
   case QEvent::MouseButtonRelease:
   case QEvent::MouseMove:
-    this->repaint();
+    this->update();
     break;
 
   default:
