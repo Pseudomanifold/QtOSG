@@ -10,8 +10,9 @@ MainWindow::MainWindow( QWidget* parent, Qt::WindowFlags flags )
 {
   QMenuBar* menuBar = this->menuBar();
 
-  menuBar->addAction( "Create 2D view", this, SLOT( onCreate2DView() ) );
-  menuBar->addAction( "Create 3D view", this, SLOT( onCreate3DView() ) );
+  QMenu* menu = menuBar->addMenu( "Test" );
+  menu->addAction( "Create 2D view", this, SLOT( onCreate2DView() ) );
+  menu->addAction( "Create 3D view", this, SLOT( onCreate3DView() ) );
 
   this->setCentralWidget( mdiArea_ );
 }
