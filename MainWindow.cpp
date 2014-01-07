@@ -1,5 +1,5 @@
-#include "MainWindow.hh"
-#include "OSGWidget.hh"
+#include "MainWindow.h"
+#include "OSGWidget.h"
 
 #include <QDebug>
 #include <QMenuBar>

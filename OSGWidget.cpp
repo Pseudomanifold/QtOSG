@@ -1,4 +1,4 @@
-#include "OSGWidget.hh"
+#include "OSGWidget.h"
 
 #include <osg/Camera>
 

@@ -13,9 +13,9 @@ INCLUDE( ${QT_USE_FILE} )
 INCLUDE_DIRECTORIES( ${OPENSCENEGRAPH_INCLUDE_DIRS} )
 
 SET( SOURCES
-  MainWindow.cc
-  QtOSG.cc
-  OSGWidget.cc
+  MainWindow.cpp
+  QtOSG.cpp
+  OSGWidget.cpp
 )
 
 ADD_EXECUTABLE( qtosg ${SOURCES} )

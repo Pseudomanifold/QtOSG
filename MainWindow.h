@@ -1,5 +1,5 @@
-#ifndef MainWindow_hh__
-#define MainWindow_hh__
+#ifndef MainWindow_h__
+#define MainWindow_h__
 
 #include <QMainWindow>
 #include <QMdiArea>

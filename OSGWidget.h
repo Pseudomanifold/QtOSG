@@ -1,5 +1,5 @@
-#ifndef OSGWidget_hh__
-#define OSGWidget_hh__
+#ifndef OSGWidget_h__
+#define OSGWidget_h__
 
 #include <QtOpenGL>
 
