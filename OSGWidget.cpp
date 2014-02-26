@@ -36,10 +36,12 @@ OSGWidget::OSGWidget( QWidget* parent,
   osg::Geode* geode = new osg::Geode;
   geode->addDrawable( sd );
 
+  float aspectRatio = static_cast<float>( this->width() / 2 ) / static_cast<float>( this->height() );
+
   osg::Camera* camera = new osg::Camera;
   camera->setViewport( 0, 0, this->width() / 2, this->height() );
   camera->setClearColor( osg::Vec4( 0.f, 0.f, 1.f, 1.f ) );
-  camera->setProjectionMatrixAsFrustum( -1.0, 1.0, -1.0, 1.0, -1.0, 1.0 );
+  camera->setProjectionMatrixAsPerspective( 30.f, aspectRatio, 1.f, 1000.f );
   camera->setGraphicsContext( graphicsWindow_ );
 
   osgViewer::View* view = new osgViewer::View;
@@ -53,7 +55,7 @@ OSGWidget::OSGWidget( QWidget* parent,
                            this->width() /2, this->height() );
 
   sideCamera->setClearColor( osg::Vec4( 0.f, 0.f, 1.f, 1.f ) );
-  sideCamera->setProjectionMatrixAsFrustum( -1.0, 1.0, -1.0, 1.0, -1.0, 1.0 );
+  sideCamera->setProjectionMatrixAsPerspective( 30.f, aspectRatio, 1.f, 1000.f );
   sideCamera->setGraphicsContext( graphicsWindow_ );
 
   osgViewer::View* sideView = new osgViewer::View;
