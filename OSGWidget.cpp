@@ -12,6 +12,8 @@
 #include <osgViewer/View>
 #include <osgViewer/ViewerEventHandlers>
 
+#include <cassert>
+
 #include <stdexcept>
 #include <vector>
 
@@ -35,7 +37,7 @@ OSGWidget::OSGWidget( QWidget* parent,
   geode->addDrawable( sd );
 
   osg::Camera* camera = new osg::Camera;
-  camera->setViewport( 0, 0, this->width(), this->height() );
+  camera->setViewport( 0, 0, this->width() / 2, this->height() );
   camera->setClearColor( osg::Vec4( 0.f, 0.f, 1.f, 1.f ) );
   camera->setProjectionMatrixAsFrustum( -1.0, 1.0, -1.0, 1.0, -1.0, 1.0 );
   camera->setGraphicsContext( graphicsWindow_ );
@@ -46,7 +48,22 @@ OSGWidget::OSGWidget( QWidget* parent,
   view->addEventHandler( new osgViewer::StatsHandler );
   view->setCameraManipulator( new osgGA::TrackballManipulator );
 
+  osg::Camera* sideCamera = new osg::Camera;
+  sideCamera->setViewport( this->width() /2, 0,
+                           this->width() /2, this->height() );
+
+  sideCamera->setClearColor( osg::Vec4( 0.f, 0.f, 1.f, 1.f ) );
+  sideCamera->setProjectionMatrixAsFrustum( -1.0, 1.0, -1.0, 1.0, -1.0, 1.0 );
+  sideCamera->setGraphicsContext( graphicsWindow_ );
+
+  osgViewer::View* sideView = new osgViewer::View;
+  sideView->setCamera( sideCamera );
+  sideView->setSceneData( geode );
+  sideView->addEventHandler( new osgViewer::StatsHandler );
+  sideView->setCameraManipulator( new osgGA::TrackballManipulator );
+
   viewer_->addView( view );
+  viewer_->addView( sideView );
   viewer_->setThreadingModel( osgViewer::CompositeViewer::SingleThreaded );
 
   // This ensures that the widget will receive keyboard events. This focus
@@ -73,11 +90,10 @@ void OSGWidget::resizeGL( int width, int height )
   std::vector<osg::Camera*> cameras;
   viewer_->getCameras( cameras );
 
-  for( std::size_t i = 0; i < cameras.size(); i++ )
-  {
-    cameras.at( i )->setViewport( 0, 0,
-                                  width, height );
-  }
+  assert( cameras.size() == 2 );
+
+  cameras[0]->setViewport( 0, 0, this->width() / 2, this->height() );
+  cameras[1]->setViewport( this->width() / 2, 0, this->width() / 2, this->height() );
 }
 
 void OSGWidget::keyPressEvent( QKeyEvent* event )
