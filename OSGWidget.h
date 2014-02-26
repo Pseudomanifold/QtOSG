@@ -35,6 +35,9 @@ protected:
 
 private:
 
+  virtual void onHome();
+  virtual void onResize( int width, int height );
+
   osgGA::EventQueue* getEventQueue() const;
 
   osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> graphicsWindow_;

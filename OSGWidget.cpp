@@ -89,13 +89,7 @@ void OSGWidget::resizeGL( int width, int height )
   this->getEventQueue()->windowResize( this->x(), this->y(), width, height );
   graphicsWindow_->resized( this->x(), this->y(), width, height );
 
-  std::vector<osg::Camera*> cameras;
-  viewer_->getCameras( cameras );
-
-  assert( cameras.size() == 2 );
-
-  cameras[0]->setViewport( 0, 0, this->width() / 2, this->height() );
-  cameras[1]->setViewport( this->width() / 2, 0, this->width() / 2, this->height() );
+  this->onResize( width, height );
 }
 
 void OSGWidget::keyPressEvent( QKeyEvent* event )
@@ -104,6 +98,9 @@ void OSGWidget::keyPressEvent( QKeyEvent* event )
   const char* keyData = keyString.toAscii().data();
 
   this->getEventQueue()->keyPress( osgGA::GUIEventAdapter::KeySymbol( *keyData ) );
+
+  if( event->key() == Qt::Key_H )
+    this->onHome();
 }
 
 void OSGWidget::keyReleaseEvent( QKeyEvent* event )
@@ -205,6 +202,29 @@ bool OSGWidget::event( QEvent* event )
   }
 
   return( handled );
+}
+
+void OSGWidget::onHome()
+{
+  osgViewer::ViewerBase::Views views;
+  viewer_->getViews( views );
+
+  for( std::size_t i = 0; i < views.size(); i++ )
+  {
+    osgViewer::View* view = views.at(i);
+    view->home();
+  }
+}
+
+void OSGWidget::onResize( int width, int height )
+{
+  std::vector<osg::Camera*> cameras;
+  viewer_->getCameras( cameras );
+
+  assert( cameras.size() == 2 );
+
+  cameras[0]->setViewport( 0, 0, this->width() / 2, this->height() );
+  cameras[1]->setViewport( this->width() / 2, 0, this->width() / 2, this->height() );
 }
 
 osgGA::EventQueue* OSGWidget::getEventQueue() const
