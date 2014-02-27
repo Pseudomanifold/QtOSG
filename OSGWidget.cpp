@@ -19,6 +19,9 @@
 
 #include <QDebug>
 
+#include <QKeyEvent>
+#include <QWheelEvent>
+
 OSGWidget::OSGWidget( QWidget* parent,
                       const QGLWidget* shareWidget,
                       Qt::WindowFlags f )
@@ -179,6 +182,17 @@ void OSGWidget::mouseReleaseEvent(QMouseEvent* event)
                                              button );
 }
 
+void OSGWidget::wheelEvent( QWheelEvent* event )
+{
+  event->accept();
+  int delta = event->delta();
+
+  osgGA::GUIEventAdapter::ScrollingMotion motion = delta > 0 ?   osgGA::GUIEventAdapter::SCROLL_UP
+                                                               : osgGA::GUIEventAdapter::SCROLL_DOWN;
+
+  this->getEventQueue()->mouseScroll( motion );
+}
+
 bool OSGWidget::event( QEvent* event )
 {
   bool handled = QGLWidget::event( event );
@@ -194,6 +208,7 @@ bool OSGWidget::event( QEvent* event )
   case QEvent::MouseButtonPress:
   case QEvent::MouseButtonRelease:
   case QEvent::MouseMove:
+  case QEvent::Wheel:
     this->update();
     break;
 
