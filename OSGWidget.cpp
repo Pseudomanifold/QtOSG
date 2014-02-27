@@ -76,6 +76,11 @@ OSGWidget::OSGWidget( QWidget* parent,
   // keyboard events that are ignored.
   this->setFocusPolicy( Qt::StrongFocus );
   this->setMinimumSize( 100, 100 );
+
+  // Ensures that the widget receives mouse move events even though no
+  // mouse button has been pressed. We require this in order to let the
+  // graphics window switch viewports properly.
+  this->setMouseTracking( true );
 }
 
 OSGWidget::~OSGWidget()
