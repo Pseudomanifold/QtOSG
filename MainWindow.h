@@ -13,8 +13,7 @@ public:
   ~MainWindow();
 
 private slots:
-  void onCreate2DView();
-  void onCreate3DView();
+  void onCreateView();
 
 private:
   QMdiArea* mdiArea_;

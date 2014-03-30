@@ -11,8 +11,7 @@ MainWindow::MainWindow( QWidget* parent, Qt::WindowFlags flags )
   QMenuBar* menuBar = this->menuBar();
 
   QMenu* menu = menuBar->addMenu( "Test" );
-  menu->addAction( "Create 2D view", this, SLOT( onCreate2DView() ) );
-  menu->addAction( "Create 3D view", this, SLOT( onCreate3DView() ) );
+  menu->addAction( "Create view", this, SLOT( onCreateView() ) );
 
   this->setCentralWidget( mdiArea_ );
 }
@@ -21,17 +20,10 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::onCreate2DView()
+void MainWindow::onCreateView()
 {
   OSGWidget* osgWidget     = new OSGWidget( this );
   QMdiSubWindow* subWindow = mdiArea_->addSubWindow( osgWidget );
 
   subWindow->show();
-}
-
-void MainWindow::onCreate3DView()
-{
-  qDebug() << __PRETTY_FUNCTION__
-           << ":"
-           << "Not yet implemented";
 }
