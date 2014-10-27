@@ -1,12 +1,13 @@
 #ifndef OSGWidget_h__
 #define OSGWidget_h__
 
+#include <QPoint>
 #include <QtOpenGL>
 
 #include <osg/ref_ptr>
 
-#include <osgViewer/CompositeViewer>
 #include <osgViewer/GraphicsWindow>
+#include <osgViewer/CompositeViewer>
 
 class OSGWidget : public QGLWidget
 {
@@ -21,6 +22,7 @@ public:
 
 protected:
 
+  virtual void paintEvent( QPaintEvent* paintEvent );
   virtual void paintGL();
   virtual void resizeGL( int width, int height );
 
@@ -43,6 +45,14 @@ private:
 
   osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> graphicsWindow_;
   osg::ref_ptr<osgViewer::CompositeViewer> viewer_;
+
+  QPoint selectionStart_;
+  QPoint selectionEnd_;
+
+  bool selectionActive_;
+  bool selectionFinished_;
+
+  void processSelection();
 };
 
 #endif
