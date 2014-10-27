@@ -66,6 +66,10 @@ OSGWidget::OSGWidget( QWidget* parent,
   : QGLWidget( parent,
                shareWidget,
                f )
+  , graphicsWindow_( new osgViewer::GraphicsWindowEmbedded( this->x(),
+                                                            this->y(),
+                                                            this->width(),
+                                                            this->height() ) )
   , viewer_( new osgViewer::CompositeViewer )
   , selectionActive_( false )
   , selectionFinished_( true )
