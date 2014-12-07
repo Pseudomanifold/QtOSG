@@ -14,8 +14,9 @@ INCLUDE_DIRECTORIES( ${OPENSCENEGRAPH_INCLUDE_DIRS} )
 
 SET( SOURCES
   MainWindow.cpp
-  QtOSG.cpp
   OSGWidget.cpp
+  PickHandler.cpp
+  QtOSG.cpp
 )
 
 ADD_EXECUTABLE( qtosg ${SOURCES} )

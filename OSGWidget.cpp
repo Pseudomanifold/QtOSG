@@ -1,4 +1,5 @@
 #include "OSGWidget.h"
+#include "PickHandler.h"
 
 #include <osg/Camera>
 
@@ -94,6 +95,7 @@ OSGWidget::OSGWidget( QWidget* parent,
   view->setCamera( camera );
   view->setSceneData( geode );
   view->addEventHandler( new osgViewer::StatsHandler );
+  view->addEventHandler( new PickHandler );
   view->setCameraManipulator( new osgGA::TrackballManipulator );
 
   osg::Camera* sideCamera = new osg::Camera;
