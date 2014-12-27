@@ -97,7 +97,9 @@ OSGWidget::OSGWidget( QWidget* parent,
   view->setCamera( camera );
   view->setSceneData( geode );
   view->addEventHandler( new osgViewer::StatsHandler );
+#ifdef WITH_PICK_HANDLER
   view->addEventHandler( new PickHandler );
+#endif
   view->setCameraManipulator( new osgGA::TrackballManipulator );
 
   osg::Camera* sideCamera = new osg::Camera;
