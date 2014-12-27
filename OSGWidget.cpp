@@ -8,6 +8,7 @@
 #include <osg/Material>
 #include <osg/Shape>
 #include <osg/ShapeDrawable>
+#include <osg/StateSet>
 
 #include <osgGA/EventQueue>
 #include <osgGA/TrackballManipulator>
@@ -84,6 +85,18 @@ OSGWidget::OSGWidget( QWidget* parent,
 
   osg::Geode* geode = new osg::Geode;
   geode->addDrawable( sd );
+
+  // Set material for basic lighting and enable depth tests. Else, the sphere
+  // will suffer from rendering errors.
+  {
+    osg::StateSet* stateSet = geode->getOrCreateStateSet();
+    osg::Material* material = new osg::Material;
+
+    material->setColorMode( osg::Material::AMBIENT_AND_DIFFUSE );
+
+    stateSet->setAttributeAndModes( material, osg::StateAttribute::ON );
+    stateSet->setMode( GL_DEPTH_TEST, osg::StateAttribute::ON );
+  }
 
   float aspectRatio = static_cast<float>( this->width() / 2 ) / static_cast<float>( this->height() );
 
