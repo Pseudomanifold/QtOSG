@@ -151,6 +151,8 @@ OSGWidget::~OSGWidget()
 
 void OSGWidget::paintEvent( QPaintEvent* /* paintEvent */ )
 {
+  this->makeCurrent();
+
   QPainter painter( this );
   painter.setRenderHint( QPainter::Antialiasing );
 
@@ -168,6 +170,7 @@ void OSGWidget::paintEvent( QPaintEvent* /* paintEvent */ )
   painter.end();
 
   this->swapBuffers();
+  this->doneCurrent();
 }
 
 void OSGWidget::paintGL()
