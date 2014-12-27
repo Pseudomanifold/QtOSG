@@ -30,6 +30,7 @@
 namespace
 {
 
+#ifdef WITH_SELECTION_PROCESSING
 QRect makeRectangle( const QPoint& first, const QPoint& second )
 {
   // Relative to the first point, the second point may be in either one of the
@@ -58,6 +59,7 @@ QRect makeRectangle( const QPoint& first, const QPoint& second )
   // Should never reach that point...
   return QRect();
 }
+#endif
 
 }
 
@@ -139,12 +141,14 @@ void OSGWidget::paintEvent( QPaintEvent* /* paintEvent */ )
 
   this->paintGL();
 
+#ifdef WITH_SELECTION_PROCESSING
   if( selectionActive_ && !selectionFinished_ )
   {
     painter.setPen( Qt::black );
     painter.setBrush( Qt::transparent );
     painter.drawRect( makeRectangle( selectionStart_, selectionEnd_ ) );
   }
+#endif
 
   painter.end();
 
@@ -170,7 +174,11 @@ void OSGWidget::keyPressEvent( QKeyEvent* event )
   const char* keyData = keyString.toAscii().data();
 
   if( event->key() == Qt::Key_S )
+  {
+#ifdef WITH_SELECTION_PROCESSING
     selectionActive_ = !selectionActive_;
+#endif
+  }
   else if( event->key() == Qt::Key_H )
     this->onHome();
   else
@@ -370,6 +378,7 @@ osgGA::EventQueue* OSGWidget::getEventQueue() const
 
 void OSGWidget::processSelection()
 {
+#ifdef WITH_SELECTION_PROCESSING
   QRect selectionRectangle = makeRectangle( selectionStart_, selectionEnd_ );
   int widgetHeight         = this->height();
 
@@ -413,4 +422,5 @@ void OSGWidget::processSelection()
     for( auto&& intersection : intersections )
       qDebug() << "Selected a drawable:" << QString::fromStdString( intersection.drawable->getName() );
   }
+#endif
 }
