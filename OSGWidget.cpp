@@ -189,7 +189,7 @@ void OSGWidget::resizeGL( int width, int height )
 void OSGWidget::keyPressEvent( QKeyEvent* event )
 {
   QString keyString   = event->text();
-  const char* keyData = keyString.toAscii().data();
+  const char* keyData = keyString.toLocal8Bit().data();
 
   if( event->key() == Qt::Key_S )
   {
@@ -206,7 +206,7 @@ void OSGWidget::keyPressEvent( QKeyEvent* event )
 void OSGWidget::keyReleaseEvent( QKeyEvent* event )
 {
   QString keyString   = event->text();
-  const char* keyData = keyString.toAscii().data();
+  const char* keyData = keyString.toLocal8Bit().data();
 
   this->getEventQueue()->keyRelease( osgGA::GUIEventAdapter::KeySymbol( *keyData ) );
 }
