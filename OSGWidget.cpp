@@ -10,6 +10,8 @@
 #include <osg/ShapeDrawable>
 #include <osg/StateSet>
 
+#include <osgDB/WriteFile>
+
 #include <osgGA/EventQueue>
 #include <osgGA/TrackballManipulator>
 
@@ -201,6 +203,11 @@ void OSGWidget::keyPressEvent( QKeyEvent* event )
     selectionActive_ = !selectionActive_;
 #endif
   }
+  else if( event->key() == Qt::Key_D )
+  {
+    osgDB::writeNodeFile( *viewer_->getView(0)->getSceneData(),
+                          "/tmp/sceneGraph.osg" );
+  }
   else if( event->key() == Qt::Key_H )
     this->onHome();
   else
@@ -362,7 +369,7 @@ bool OSGWidget::event( QEvent* event )
     break;
   }
 
-  return( handled );
+  return handled;
 }
 
 void OSGWidget::onHome()
@@ -393,9 +400,9 @@ osgGA::EventQueue* OSGWidget::getEventQueue() const
   osgGA::EventQueue* eventQueue = graphicsWindow_->getEventQueue();
 
   if( eventQueue )
-    return( eventQueue );
+    return eventQueue;
   else
-    throw( std::runtime_error( "Unable to obtain valid event queue") );
+    throw std::runtime_error( "Unable to obtain valid event queue");
 }
 
 void OSGWidget::processSelection()
