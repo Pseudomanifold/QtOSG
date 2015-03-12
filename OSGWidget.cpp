@@ -138,6 +138,9 @@ OSGWidget::OSGWidget( QWidget* parent,
   viewer_->addView( view );
   viewer_->addView( sideView );
   viewer_->setThreadingModel( osgViewer::CompositeViewer::SingleThreaded );
+  viewer_->realize();
+
+  this->setAutoBufferSwap( false );
 
   // This ensures that the widget will receive keyboard events. This focus
   // policy is not set by default. The default, Qt::NoFocus, will result in
@@ -202,16 +205,24 @@ void OSGWidget::keyPressEvent( QKeyEvent* event )
 #ifdef WITH_SELECTION_PROCESSING
     selectionActive_ = !selectionActive_;
 #endif
+
+    // Further processing is required for the statistics handler here, so we do
+    // not return right away.
   }
   else if( event->key() == Qt::Key_D )
   {
     osgDB::writeNodeFile( *viewer_->getView(0)->getSceneData(),
                           "/tmp/sceneGraph.osg" );
+
+    return;
   }
   else if( event->key() == Qt::Key_H )
+  {
     this->onHome();
-  else
-    this->getEventQueue()->keyPress( osgGA::GUIEventAdapter::KeySymbol( *keyData ) );
+    return;
+  }
+
+  this->getEventQueue()->keyPress( osgGA::GUIEventAdapter::KeySymbol( *keyData ) );
 }
 
 void OSGWidget::keyReleaseEvent( QKeyEvent* event )
