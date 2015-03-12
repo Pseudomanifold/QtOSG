@@ -113,7 +113,11 @@ OSGWidget::OSGWidget( QWidget* parent,
 #ifdef WITH_PICK_HANDLER
   view->addEventHandler( new PickHandler );
 #endif
-  view->setCameraManipulator( new osgGA::TrackballManipulator );
+
+  osgGA::TrackballManipulator* manipulator = new osgGA::TrackballManipulator;
+  manipulator->setAllowThrow( false );
+
+  view->setCameraManipulator( manipulator );
 
   osg::Camera* sideCamera = new osg::Camera;
   sideCamera->setViewport( this->width() /2, 0,
