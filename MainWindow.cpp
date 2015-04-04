@@ -2,6 +2,7 @@
 #include "OSGWidget.h"
 
 #include <QDebug>
+#include <QMdiSubWindow>
 #include <QMenuBar>
 
 MainWindow::MainWindow( QWidget* parent, Qt::WindowFlags flags )

@@ -2,20 +2,19 @@
 #define OSGWidget_h__
 
 #include <QPoint>
-#include <QtOpenGL>
+#include <QOpenGLWidget>
 
 #include <osg/ref_ptr>
 
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/CompositeViewer>
 
-class OSGWidget : public QGLWidget
+class OSGWidget : public QOpenGLWidget
 {
   Q_OBJECT
 
 public:
   OSGWidget( QWidget* parent = 0,
-             const QGLWidget* shareWidget = 0,
              Qt::WindowFlags f = 0 );
 
   virtual ~OSGWidget();

@@ -28,6 +28,7 @@
 
 #include <QDebug>
 #include <QKeyEvent>
+#include <QPainter>
 #include <QWheelEvent>
 
 namespace
@@ -67,11 +68,9 @@ QRect makeRectangle( const QPoint& first, const QPoint& second )
 }
 
 OSGWidget::OSGWidget( QWidget* parent,
-                      const QGLWidget* shareWidget,
                       Qt::WindowFlags f )
-  : QGLWidget( parent,
-               shareWidget,
-               f )
+  : QOpenGLWidget( parent,
+                   f )
   , graphicsWindow_( new osgViewer::GraphicsWindowEmbedded( this->x(),
                                                             this->y(),
                                                             this->width(),
@@ -140,8 +139,6 @@ OSGWidget::OSGWidget( QWidget* parent,
   viewer_->setThreadingModel( osgViewer::CompositeViewer::SingleThreaded );
   viewer_->realize();
 
-  this->setAutoBufferSwap( false );
-
   // This ensures that the widget will receive keyboard events. This focus
   // policy is not set by default. The default, Qt::NoFocus, will result in
   // keyboard events that are ignored.
@@ -178,7 +175,6 @@ void OSGWidget::paintEvent( QPaintEvent* /* paintEvent */ )
 
   painter.end();
 
-  this->swapBuffers();
   this->doneCurrent();
 }
 
@@ -359,7 +355,7 @@ void OSGWidget::wheelEvent( QWheelEvent* event )
 
 bool OSGWidget::event( QEvent* event )
 {
-  bool handled = QGLWidget::event( event );
+  bool handled = QOpenGLWidget::event( event );
 
   // This ensures that the OSG widget is always going to be repainted after the
   // user performed some interaction. Doing this in the event handler ensures
