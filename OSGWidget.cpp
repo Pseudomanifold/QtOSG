@@ -398,8 +398,8 @@ void OSGWidget::onResize( int width, int height )
 
   assert( cameras.size() == 2 );
 
-  cameras[0]->setViewport( 0, 0, this->width() / 2, this->height() );
-  cameras[1]->setViewport( this->width() / 2, 0, this->width() / 2, this->height() );
+  cameras[0]->setViewport( 0, 0, width / 2, height );
+  cameras[1]->setViewport( width / 2, 0, width / 2, height );
 }
 
 osgGA::EventQueue* OSGWidget::getEventQueue() const
