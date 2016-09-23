@@ -67,6 +67,21 @@ QRect makeRectangle( const QPoint& first, const QPoint& second )
 
 }
 
+namespace osgWidget {
+  void Viewer::setUpThreading()
+  {
+    if(_threadingModel == SingleThreaded) {
+      if(_threadsRunning) {
+        stopThreading();
+      }
+    } else {
+      if(!_threadsRunning) {
+        startThreading();
+      }
+    }
+  }
+}
+
 OSGWidget::OSGWidget( QWidget* parent,
                       Qt::WindowFlags f )
   : QOpenGLWidget( parent,
@@ -75,7 +90,7 @@ OSGWidget::OSGWidget( QWidget* parent,
                                                             this->y(),
                                                             this->width(),
                                                             this->height() ) )
-  , viewer_( new osgViewer::CompositeViewer )
+  , viewer_( new osgWidget::Viewer )
   , selectionActive_( false )
   , selectionFinished_( true )
 {

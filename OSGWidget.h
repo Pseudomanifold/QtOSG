@@ -9,6 +9,19 @@
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/CompositeViewer>
 
+namespace osgWidget {
+  //! The subclass of osgViewer::CompositeViewer we use
+  /*!
+   * This subclassing allows us to remove the annoying automatic
+   * setting of the CPU affinity to core 0 by osgViewer::ViewerBase,
+   * osgViewer::CompositeViewer's base class.
+   */
+  class Viewer : public osgViewer::CompositeViewer
+  {
+    public:
+	    virtual void setUpThreading();
+  };
+}
 class OSGWidget : public QOpenGLWidget
 {
   Q_OBJECT
@@ -43,7 +56,7 @@ private:
   osgGA::EventQueue* getEventQueue() const;
 
   osg::ref_ptr<osgViewer::GraphicsWindowEmbedded> graphicsWindow_;
-  osg::ref_ptr<osgViewer::CompositeViewer> viewer_;
+  osg::ref_ptr<osgWidget::Viewer> viewer_;
 
   QPoint selectionStart_;
   QPoint selectionEnd_;
