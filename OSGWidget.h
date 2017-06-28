@@ -9,7 +9,8 @@
 #include <osgViewer/GraphicsWindow>
 #include <osgViewer/CompositeViewer>
 
-namespace osgWidget {
+namespace osgWidget
+{
   //! The subclass of osgViewer::CompositeViewer we use
   /*!
    * This subclassing allows us to remove the annoying automatic
@@ -19,9 +20,10 @@ namespace osgWidget {
   class Viewer : public osgViewer::CompositeViewer
   {
     public:
-	    virtual void setUpThreading();
+	    virtual void setupThreading();
   };
 }
+
 class OSGWidget : public QOpenGLWidget
 {
   Q_OBJECT

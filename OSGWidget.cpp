@@ -67,17 +67,19 @@ QRect makeRectangle( const QPoint& first, const QPoint& second )
 
 }
 
-namespace osgWidget {
-  void Viewer::setUpThreading()
+namespace osgWidget
+{
+  void Viewer::setupThreading()
   {
-    if(_threadingModel == SingleThreaded) {
-      if(_threadsRunning) {
+    if( _threadingModel == SingleThreaded )
+    {
+      if(_threadsRunning)
         stopThreading();
-      }
-    } else {
-      if(!_threadsRunning) {
+    }
+    else
+    {
+      if(!_threadsRunning)
         startThreading();
-      }
     }
   }
 }
