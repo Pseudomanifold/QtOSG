@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Submanifold/QtOSG.svg?branch=master)](https://travis-ci.org/Submanifold/QtOSG)
+
 # QtOSG: combining Qt and OSG in a thread-safe manner
 
 This repository contains a widget based on `QOpenGLWidget` that is able
