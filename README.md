@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Submanifold/QtOSG.svg?branch=master)](https://travis-ci.org/Submanifold/QtOSG)
+[![Build Status](https://travis-ci.org/Submanifold/QtOSG.svg?branch=master)](https://travis-ci.org/Submanifold/QtOSG) [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/1074/badge)](https://bestpractices.coreinfrastructure.org/projects/1074)
 
 # QtOSG: combining Qt and OSG in a thread-safe manner
 
