@@ -262,8 +262,10 @@ void OSGWidget::mouseMoveEvent( QMouseEvent* event )
   }
   else
   {
-    this->getEventQueue()->mouseMotion( static_cast<float>( event->x() ),
-                                        static_cast<float>( event->y() ) );
+    auto pixelRatio = this->devicePixelRatio();
+
+    this->getEventQueue()->mouseMotion( static_cast<float>( event->x() * pixelRatio ),
+                                        static_cast<float>( event->y() * pixelRatio ) );
   }
 }
 
@@ -304,8 +306,10 @@ void OSGWidget::mousePressEvent( QMouseEvent* event )
       break;
     }
 
-    this->getEventQueue()->mouseButtonPress( static_cast<float>( event->x() ),
-                                             static_cast<float>( event->y() ),
+    auto pixelRatio = this->devicePixelRatio();
+
+    this->getEventQueue()->mouseButtonPress( static_cast<float>( event->x() * pixelRatio ),
+                                             static_cast<float>( event->y() * pixelRatio ),
                                              button );
     }
 }
@@ -350,8 +354,10 @@ void OSGWidget::mouseReleaseEvent(QMouseEvent* event)
       break;
     }
 
-    this->getEventQueue()->mouseButtonRelease( static_cast<float>( event->x() ),
-                                               static_cast<float>( event->y() ),
+    auto pixelRatio = this->devicePixelRatio();
+
+    this->getEventQueue()->mouseButtonRelease( static_cast<float>( pixelRatio * event->x() ),
+                                               static_cast<float>( pixelRatio * event->y() ),
                                                button );
   }
 }
