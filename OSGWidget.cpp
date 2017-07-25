@@ -117,9 +117,10 @@ OSGWidget::OSGWidget( QWidget* parent,
   }
 
   float aspectRatio = static_cast<float>( this->width() / 2 ) / static_cast<float>( this->height() );
+  auto pixelRatio   = this->devicePixelRatio();
 
   osg::Camera* camera = new osg::Camera;
-  camera->setViewport( 0, 0, this->width() / 2, this->height() );
+  camera->setViewport( 0, 0, this->width() / 2 * pixelRatio, this->height() * pixelRatio );
   camera->setClearColor( osg::Vec4( 0.f, 0.f, 1.f, 1.f ) );
   camera->setProjectionMatrixAsPerspective( 30.f, aspectRatio, 1.f, 1000.f );
   camera->setGraphicsContext( graphicsWindow_ );
@@ -138,8 +139,8 @@ OSGWidget::OSGWidget( QWidget* parent,
   view->setCameraManipulator( manipulator );
 
   osg::Camera* sideCamera = new osg::Camera;
-  sideCamera->setViewport( this->width() /2, 0,
-                           this->width() /2, this->height() );
+  sideCamera->setViewport( this->width() /2 * pixelRatio, 0,
+                           this->width() /2 * pixelRatio, this->height() * pixelRatio );
 
   sideCamera->setClearColor( osg::Vec4( 0.f, 0.f, 1.f, 1.f ) );
   sideCamera->setProjectionMatrixAsPerspective( 30.f, aspectRatio, 1.f, 1000.f );
@@ -415,8 +416,10 @@ void OSGWidget::onResize( int width, int height )
 
   assert( cameras.size() == 2 );
 
-  cameras[0]->setViewport( 0, 0, width / 2, height );
-  cameras[1]->setViewport( width / 2, 0, width / 2, height );
+  auto pixelRatio = this->devicePixelRatio();
+
+  cameras[0]->setViewport( 0, 0, width / 2 * pixelRatio, height * pixelRatio );
+  cameras[1]->setViewport( width / 2 * pixelRatio, 0, width / 2 * pixelRatio, height * pixelRatio );
 }
 
 osgGA::EventQueue* OSGWidget::getEventQueue() const
