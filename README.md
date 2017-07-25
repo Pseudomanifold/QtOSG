@@ -22,6 +22,7 @@ Moreover, the widget demonstrates several interaction mechanisms:
 # Building QtOSG
 
     $ git clone https://github.com/Submanifold/QtOSG
+    $ cd QtOSG
     $ mkdir build
     $ cd build
     $ cmake ../
