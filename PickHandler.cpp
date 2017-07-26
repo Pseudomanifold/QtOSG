@@ -33,6 +33,8 @@ bool PickHandler::handle( const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdap
     osgUtil::LineSegmentIntersector* intersector
         = new osgUtil::LineSegmentIntersector( osgUtil::Intersector::WINDOW, ea.getX() * devicePixelRatio_, ea.getY() * devicePixelRatio_ );
 
+    std::cout << ea.getX() << "," << ea.getY() << "," << devicePixelRatio_ << "\n";
+
     osgUtil::IntersectionVisitor iv( intersector );
 
     osg::Camera* camera = viewer->getCamera();
