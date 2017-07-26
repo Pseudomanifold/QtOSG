@@ -9,6 +9,11 @@
 
 #include <iostream>
 
+PickHandler::PickHandler( double devicePixelRatio )
+  : devicePixelRatio_( devicePixelRatio )
+{
+}
+
 PickHandler::~PickHandler()
 {
 }
@@ -26,7 +31,7 @@ bool PickHandler::handle( const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdap
   if( viewer )
   {
     osgUtil::LineSegmentIntersector* intersector
-        = new osgUtil::LineSegmentIntersector( osgUtil::Intersector::WINDOW, ea.getX(), ea.getY() );
+        = new osgUtil::LineSegmentIntersector( osgUtil::Intersector::WINDOW, ea.getX() * devicePixelRatio_, ea.getY() * devicePixelRatio_ );
 
     osgUtil::IntersectionVisitor iv( intersector );
 

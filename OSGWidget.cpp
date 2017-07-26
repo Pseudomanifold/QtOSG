@@ -130,7 +130,7 @@ OSGWidget::OSGWidget( QWidget* parent,
   view->setSceneData( geode );
   view->addEventHandler( new osgViewer::StatsHandler );
 #ifdef WITH_PICK_HANDLER
-  view->addEventHandler( new PickHandler );
+  view->addEventHandler( new PickHandler( this->devicePixelRatio() ) );
 #endif
 
   osgGA::TrackballManipulator* manipulator = new osgGA::TrackballManipulator;
