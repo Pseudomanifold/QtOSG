@@ -274,7 +274,7 @@ void OSGWidget::mousePressEvent( QMouseEvent* event )
   // Selection processing
   if( selectionActive_ && event->button() == Qt::LeftButton )
   {
-    selectionStart_    = event->pos() * this->devicePixelRatio();
+    selectionStart_    = event->pos();
     selectionEnd_      = selectionStart_; // Deletes the old selection
     selectionFinished_ = false;           // As long as this is set, the rectangle will be drawn
   }
@@ -320,7 +320,7 @@ void OSGWidget::mouseReleaseEvent(QMouseEvent* event)
   // through polytope intersection.
   if( selectionActive_ && event->button() == Qt::LeftButton )
   {
-    selectionEnd_      = event->pos() * this->devicePixelRatio();
+    selectionEnd_      = event->pos();
     selectionFinished_ = true; // Will force the painter to stop drawing the
                                // selection rectangle
 
@@ -442,12 +442,18 @@ void OSGWidget::processSelection()
 {
 #ifdef WITH_SELECTION_PROCESSING
   QRect selectionRectangle = makeRectangle( selectionStart_, selectionEnd_ );
-  int widgetHeight         = this->height();
+  auto widgetHeight        = this->height();
+  auto pixelRatio          = this->devicePixelRatio();
 
   double xMin = selectionRectangle.left();
   double xMax = selectionRectangle.right();
   double yMin = widgetHeight - selectionRectangle.bottom();
   double yMax = widgetHeight - selectionRectangle.top();
+
+  xMin *= pixelRatio;
+  yMin *= pixelRatio;
+  xMax *= pixelRatio;
+  yMax *= pixelRatio;
 
   osgUtil::PolytopeIntersector* polytopeIntersector
       = new osgUtil::PolytopeIntersector( osgUtil::PolytopeIntersector::WINDOW,
@@ -464,6 +470,8 @@ void OSGWidget::processSelection()
 
   for( unsigned int viewIndex = 0; viewIndex < viewer_->getNumViews(); viewIndex++ )
   {
+    qDebug() << "View index:" << viewIndex;
+
     osgViewer::View* view = viewer_->getView( viewIndex );
 
     if( !view )
