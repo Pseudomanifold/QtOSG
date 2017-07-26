@@ -274,7 +274,7 @@ void OSGWidget::mousePressEvent( QMouseEvent* event )
   // Selection processing
   if( selectionActive_ && event->button() == Qt::LeftButton )
   {
-    selectionStart_    = event->pos();
+    selectionStart_    = event->pos() * this->devicePixelRatio();
     selectionEnd_      = selectionStart_; // Deletes the old selection
     selectionFinished_ = false;           // As long as this is set, the rectangle will be drawn
   }
@@ -320,7 +320,7 @@ void OSGWidget::mouseReleaseEvent(QMouseEvent* event)
   // through polytope intersection.
   if( selectionActive_ && event->button() == Qt::LeftButton )
   {
-    selectionEnd_      = event->pos();
+    selectionEnd_      = event->pos() * this->devicePixelRatio();
     selectionFinished_ = true; // Will force the painter to stop drawing the
                                // selection rectangle
 
