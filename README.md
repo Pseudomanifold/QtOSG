@@ -14,10 +14,20 @@ Moreover, the widget demonstrates several interaction mechanisms:
 
 # Requirements
 
+* Linux or MacOS X (see below for a brief discussion on supporting
+  Microsoft Windows)
 * A recent C++ compiler with support for C++11
 * `CMake` (minimum version 2.8.11)
 * `Qt5`
 * `OpenSceneGraph`
+
+## What about Microsoft Windows
+
+I am not familiar enough with graphics programming for Microsoft Windows
+to fully support this as a target platform. In [issue 7](https://github.com/Submanifold/QtOSG/issues/7), it was briefly
+discussed that some modifications are required for QtOSG to fully
+compile/work under Microsoft Windows. If you want to target this
+platform, I would be glad for the help!
 
 # Building QtOSG
 
