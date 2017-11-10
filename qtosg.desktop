@@ -1,0 +1,9 @@
+[Desktop Entry]
+
+Type=Application
+Version=1.0
+Name=qtosg
+Comment=A widget for integrating OpenSceneGraph and Qt widgets
+Exec=qtosg
+Terminal=false
+Categories=Utilities
