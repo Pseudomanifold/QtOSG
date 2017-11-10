@@ -49,3 +49,6 @@ TARGET_LINK_LIBRARIES( qtosg
   Qt5::Gui
   Qt5::OpenGL
 )
+
+INSTALL( TARGETS  qtosg RUNTIME DESTINATION bin )
+INSTALL( PROGRAMS qtosg.desktop DESTINATION share/applications )
