@@ -6,6 +6,12 @@ SET( CMAKE_CXX_FLAGS "-std=c++11 -Wall -pedantic -Wno-long-long" )
 SET( CMAKE_INCLUDE_CURRENT_DIR ON )
 SET( CMAKE_AUTOMOC ON )
 
+    # QT5 Handling - sample under OSX : cmake .. -DQT5_DIR=/usr/local/Cellar/qt/5.10.1
+    if(DEFINED ENV{QT5_DIR})
+      set( QT5_DIR $ENV{QT5_DIR} )
+    endif()
+    set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT5_DIR})
+
 FIND_PACKAGE( Qt5Core )
 FIND_PACKAGE( Qt5Gui  )
 FIND_PACKAGE( Qt5OpenGL )
