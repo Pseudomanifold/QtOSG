@@ -3,6 +3,8 @@
 The following people contributed code to `QtOSG`:
 
 * [fiesh](https://github.com/fiesh): thread affinity bugfixes
+* [mtola](https://github.com/mtola) (Martial Tola): CMake fixes for Mac OS
+  X and Windows
 * [Submanifold](https://github.com/Submanifold) (Bastian Rieck): main
   contributor
 
