@@ -29,6 +29,10 @@ discussed that some modifications are required for QtOSG to fully
 compile/work under Microsoft Windows. If you want to target this
 platform, I would be glad for the help!
 
+Thanks to [Martial Tola](https://github.com/mtola), support for
+compiling under Microsoft Windows has been added to the project
+and I am looking forward to any comments.
+
 # Building QtOSG
 
     $ git clone https://github.com/Submanifold/QtOSG
@@ -63,7 +67,7 @@ The following key bindings are active:
 # How to contribute
 
 Please see the [contribution guidelines](CONTRIBUTING.md) for more
-information.
+information and a list of the contributors.
 
 # Licence
 
