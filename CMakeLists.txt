@@ -8,11 +8,12 @@ PROJECT( QtOSG )
 SET( CMAKE_INCLUDE_CURRENT_DIR ON )
 SET( CMAKE_AUTOMOC ON )
 
-    # QT5 Handling - sample under OSX : cmake .. -DQT5_DIR=/usr/local/Cellar/qt/5.10.1
-    if(DEFINED ENV{QT5_DIR})
-      set( QT5_DIR $ENV{QT5_DIR} )
-    endif()
-    set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT5_DIR})
+# QT5 Handling - sample under OSX : cmake .. -DQT5_DIR=/usr/local/Cellar/qt/5.10.1
+IF( DEFINED ENV{QT5_DIR} )
+  SET( QT5_DIR $ENV{QT5_DIR} )
+ENDIF()
+
+SET( CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} ${QT5_DIR} )
 
 FIND_PACKAGE( Qt5Core )
 FIND_PACKAGE( Qt5Gui  )
@@ -58,37 +59,53 @@ TARGET_LINK_LIBRARIES( qtosg
   Qt5::OpenGL
 )
 
-	if( MSVC )
-	  set( QT_PLUGINS_DIR "${QT5_DIR}/plugins" )
+IF( MSVC )
+  SET( QT_PLUGINS_DIR "${QT5_DIR}/plugins" )
 
-	  #---------------------------------------------------------------------------
-	  # Copy Qt plugins to 'Debug & Release' directories & configure qt.conf file
-	  #---------------------------------------------------------------------------
-	  file( GLOB qtplugin_dirs RELATIVE
-	    "${QT_PLUGINS_DIR}"
-	    "${QT_PLUGINS_DIR}/imageformats*"
-	    "${QT_PLUGINS_DIR}/platforms*" )
-	  file( REMOVE_RECURSE
-	    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Debug/QtPlugins" )
-	  file( REMOVE_RECURSE
-	    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Release/QtPlugins" )
-	  file( MAKE_DIRECTORY
-	    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Debug/QtPlugins" )
-	  file( MAKE_DIRECTORY
-	    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Release/QtPlugins" )
-	  foreach( qtplugin ${qtplugin_dirs} )
-	    file( COPY "${QT_PLUGINS_DIR}/${qtplugin}"
-	      DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Debug/QtPlugins" )
-	    file( COPY "${QT_PLUGINS_DIR}/${qtplugin}"
-	      DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Release/QtPlugins" )
-	  endforeach()
-	  file( WRITE
-	    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Debug/qt.conf"
-	    "[Paths]\nPlugins = QtPlugins" )
-	  file( WRITE
-	    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Release/qt.conf"
-	    "[Paths]\nPlugins = QtPlugins" )
-	endif()
+  ######################################################################
+  # Copy Qt plugins to 'Debug & Release' directories & configure qt.conf file
+  ######################################################################
+
+  fILE( GLOB qtplugin_dirs RELATIVE
+    "${QT_PLUGINS_DIR}"
+    "${QT_PLUGINS_DIR}/imageformats*"
+    "${QT_PLUGINS_DIR}/platforms*"
+  )
+  FILE( REMOVE_RECURSE
+    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Debug/QtPlugins"
+  )
+
+  FILE( REMOVE_RECURSE
+    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Release/QtPlugins"
+  )
+
+  FILE( MAKE_DIRECTORY
+    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Debug/QtPlugins"
+  )
+
+  FILE( MAKE_DIRECTORY
+    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Release/QtPlugins"
+  )
+
+  FOREACH( qtplugin ${qtplugin_dirs} )
+    FILE( COPY "${QT_PLUGINS_DIR}/${qtplugin}"
+      DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Debug/QtPlugins"
+    )
+    FILE( COPY "${QT_PLUGINS_DIR}/${qtplugin}"
+      DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Release/QtPlugins"
+    )
+  ENDFOREACH()
+
+  FILE( WRITE
+    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Debug/qt.conf"
+    "[Paths]\nPlugins = QtPlugins"
+  )
+
+  FILE( WRITE
+    "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_OUTPUT_PATH}/Release/qt.conf"
+    "[Paths]\nPlugins = QtPlugins"
+  )
+ENDIF()
 
 INSTALL( TARGETS  qtosg RUNTIME DESTINATION bin )
 INSTALL( PROGRAMS qtosg.desktop DESTINATION share/applications )
